@@ -53,6 +53,12 @@ const Lightbox = (() => {
   return { abrir, fechar };
 })();
 
+/* ---- Qualquer imagem com data-amplia abre em tela cheia ---- */
+document.addEventListener('click', e => {
+  const img = e.target.closest('img[data-amplia]');
+  if(img) Lightbox.abrir(img.src, img.alt);
+});
+
 /* ---- Como a logo se encaixa no topo, conforme o formato escolhido ----
    redondo  : recorta em círculo (bom para símbolos quadrados)
    quadrado : cabe inteira dentro da caixa, cantos arredondados
