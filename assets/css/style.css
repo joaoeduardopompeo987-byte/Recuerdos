@@ -1,6 +1,6 @@
-/* =========================================================
-   Recuerdos — folha de estilo principal
-   Para trocar as cores do site, mexa só nas variáveis abaixo.
+﻿/* =========================================================
+   Recuerdos â€” folha de estilo principal
+   Para trocar as cores do site, mexa sÃ³ nas variÃ¡veis abaixo.
    ========================================================= */
 :root{
   --ciano:#00c2f3;
@@ -43,7 +43,7 @@ a{color:inherit;text-decoration:none}
 .topbar-whats{background:var(--verde-whats);padding:12px 40px;display:flex;align-items:center;margin-left:auto}
 .topbar-whats:hover{filter:brightness(1.08)}
 
-/* ---------- Cabeçalho ---------- */
+/* ---------- CabeÃ§alho ---------- */
 .header{
   background:rgba(255,255,255,.92);backdrop-filter:blur(10px);
   position:sticky;top:0;z-index:50;border-bottom:1px solid var(--borda);
@@ -55,8 +55,8 @@ a{color:inherit;text-decoration:none}
 .logo-mark{display:flex;align-items:center}
 .logo-mark svg{width:52px;height:52px;border-radius:50%}
 .logo-text{font-weight:700;font-size:17px;letter-spacing:1.5px;color:var(--azul-escuro);white-space:nowrap}
-/* quando há uma logo enviada pelo painel, o nome escrito sai:
-   a própria imagem já traz a marca, e repetir polui o topo */
+/* quando hÃ¡ uma logo enviada pelo painel, o nome escrito sai:
+   a prÃ³pria imagem jÃ¡ traz a marca, e repetir polui o topo */
 .logo.tem-imagem .logo-text{display:none}
 
 .nav{margin-left:auto}
@@ -97,7 +97,7 @@ a{color:inherit;text-decoration:none}
   min-width:100%;height:440px;display:flex;align-items:center;
   background-size:cover;background-position:center;position:relative
 }
-/* Fundos provisórios — troque por: background-image:url('../img/banner1.jpg') */
+/* Fundos provisÃ³rios â€” troque por: background-image:url('../img/banner1.jpg') */
 .slide-1{background:linear-gradient(135deg,#7ed3f5,#1d8fd1 60%,#0a5ea3)}
 .slide-2{background:linear-gradient(135deg,#8fe3f0,#00b3d4 60%,#046b8f)}
 .slide-3{background:linear-gradient(135deg,#ffd77a,#f08a3c 55%,#c9531f)}
@@ -116,7 +116,7 @@ a{color:inherit;text-decoration:none}
 .dots button{width:11px;height:11px;border-radius:50%;border:2px solid #fff;background:transparent;cursor:pointer;padding:0}
 .dots button.active{background:#fff}
 
-/* ---------- Seções ---------- */
+/* ---------- SeÃ§Ãµes ---------- */
 .section{padding:70px 0}
 .section.alt{background:var(--fundo-alt)}
 .eyebrow{font-weight:600;margin:0 0 2px}
@@ -157,7 +157,7 @@ a{color:inherit;text-decoration:none}
 }
 .btn:hover{background:var(--azul-escuro)}
 
-/* ---------- Coleções (mapa ilustrado) ---------- */
+/* ---------- ColeÃ§Ãµes (mapa ilustrado) ---------- */
 .colecoes-mapa{margin:0;display:flex;justify-content:center}
 .colecoes-mapa img{
   width:100%;max-width:900px;height:auto;cursor:zoom-in;
@@ -179,7 +179,7 @@ a{color:inherit;text-decoration:none}
 .form input:focus,.form textarea:focus{outline:2px solid var(--ciano);border-color:transparent}
 .form-msg{margin:0;font-size:14px;color:var(--azul);min-height:20px}
 
-/* ---------- Rodapé ---------- */
+/* ---------- RodapÃ© ---------- */
 .footer{background:var(--azul-escuro);color:#dff1fb;padding:26px 0;font-size:14px}
 .footer-inner{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .footer p{margin:0}
@@ -191,7 +191,7 @@ a{color:inherit;text-decoration:none}
   display:grid;place-items:center;padding:40px 20px;cursor:zoom-out
 }
 .lightbox[hidden]{display:none}
-/* a imagem cresce até preencher a tela, mesmo que o arquivo seja pequeno */
+/* a imagem cresce atÃ© preencher a tela, mesmo que o arquivo seja pequeno */
 .lightbox img{
   width:min(92vw,900px);max-height:86vh;height:auto;object-fit:contain;
   padding:24px;border-radius:12px;background:#fff;
@@ -203,7 +203,7 @@ a{color:inherit;text-decoration:none}
 }
 .lightbox-fechar:hover{background:rgba(255,255,255,.34)}
 
-/* ---------- Botão flutuante WhatsApp ---------- */
+/* ---------- BotÃ£o flutuante WhatsApp ---------- */
 .whats-float{
   position:fixed;right:20px;bottom:20px;z-index:60;width:56px;height:56px;border-radius:50%;
   background:var(--verde-whats);display:grid;place-items:center;box-shadow:0 6px 18px rgba(0,0,0,.25)
@@ -246,7 +246,7 @@ a{color:inherit;text-decoration:none}
 .loja-info .btn{margin-top:auto;padding:10px 18px;font-size:15px}
 .vazio{text-align:center;color:var(--texto-suave);margin-top:30px}
 
-/* ---------- Botão e painel do carrinho ---------- */
+/* ---------- BotÃ£o e painel do carrinho ---------- */
 .cart-btn{position:relative;background:var(--ciano);border:0;cursor:pointer;width:42px;height:42px;border-radius:50%;display:grid;place-items:center}
 .cart-btn svg{width:22px;height:22px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .cart-count{
@@ -260,11 +260,11 @@ a{color:inherit;text-decoration:none}
   position:fixed;top:0;right:0;width:380px;max-width:92vw;height:100%;background:#fff;z-index:80;
   display:flex;flex-direction:column;box-shadow:-6px 0 24px rgba(0,0,0,.2)
 }
-/* precisa ser explícito: .carrinho{display:flex} venceria o [hidden] do HTML */
+/* precisa ser explÃ­cito: .carrinho{display:flex} venceria o [hidden] do HTML */
 .carrinho[hidden]{display:none}
 
-/* Com o carrinho aberto, o conteúdo se desloca para a esquerda
-   em vez de ficar escondido atrás do painel. */
+/* Com o carrinho aberto, o conteÃºdo se desloca para a esquerda
+   em vez de ficar escondido atrÃ¡s do painel. */
 @media (min-width:900px){
   body{transition:padding-right .3s ease}
   body.carrinho-aberto{padding-right:380px}
@@ -419,7 +419,6 @@ a{color:inherit;text-decoration:none}
 @media (max-width:1080px){
   .prod-grid{grid-template-columns:repeat(4,1fr)}
   .seg-grid{grid-template-columns:repeat(2,1fr)}
-  .clientes{grid-template-columns:repeat(3,1fr)}
   .loja-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media (max-width:1024px){
@@ -442,6 +441,5 @@ a{color:inherit;text-decoration:none}
   .loja-grid{grid-template-columns:repeat(2,1fr)}
   .loja-filtros select{margin-left:0}
   .seg-grid{grid-template-columns:1fr}
-  .clientes{grid-template-columns:repeat(2,1fr)}
   .section{padding:48px 0}
 }
