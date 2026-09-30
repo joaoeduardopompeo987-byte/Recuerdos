@@ -236,6 +236,16 @@ a{color:inherit;text-decoration:none}
   position:fixed;top:0;right:0;width:380px;max-width:92vw;height:100%;background:#fff;z-index:80;
   display:flex;flex-direction:column;box-shadow:-6px 0 24px rgba(0,0,0,.2)
 }
+/* precisa ser explícito: .carrinho{display:flex} venceria o [hidden] do HTML */
+.carrinho[hidden]{display:none}
+
+/* Com o carrinho aberto, o conteúdo se desloca para a esquerda
+   em vez de ficar escondido atrás do painel. */
+@media (min-width:900px){
+  body{transition:padding-right .3s ease}
+  body.carrinho-aberto{padding-right:380px}
+  body.carrinho-aberto .overlay{background:rgba(10,61,107,.06)}
+}
 .carrinho-topo{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--borda)}
 .carrinho-topo h2{margin:0;font-size:20px;color:var(--azul)}
 .fechar{background:none;border:0;font-size:30px;line-height:1;cursor:pointer;color:var(--texto-suave)}

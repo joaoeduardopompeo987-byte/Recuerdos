@@ -87,8 +87,16 @@ const itensEl  = document.getElementById('carrinho-itens');
 const totalEl  = document.getElementById('total');
 const contador = document.getElementById('cart-count');
 
-function abrir(){ painel.hidden = false; overlay.hidden = false; }
-function fechar(){ painel.hidden = true; overlay.hidden = true; }
+function abrir(){
+  painel.hidden = false;
+  overlay.hidden = false;
+  document.body.classList.add('carrinho-aberto');
+}
+function fechar(){
+  painel.hidden = true;
+  overlay.hidden = true;
+  document.body.classList.remove('carrinho-aberto');
+}
 
 document.getElementById('cart-btn').addEventListener('click', abrir);
 document.getElementById('fechar-carrinho').addEventListener('click', fechar);
