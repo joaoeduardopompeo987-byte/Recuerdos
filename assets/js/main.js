@@ -16,13 +16,58 @@
   });
 })();
 
+/* ---- Identidade do site: logo, nome e frase (vêm do painel) ---- */
+(async function(){
+  if(typeof DB === 'undefined' || !DB.ativo) return;
+  const cfg = await DB.obterConfig();
+  if(!cfg) return;
+
+  document.querySelectorAll('.logo-text').forEach(el => el.textContent = cfg.nome_site);
+  const frase = document.querySelector('.hero-tagline');
+  if(frase && cfg.tagline) frase.textContent = cfg.tagline;
+
+  if(cfg.logo_url){
+    document.querySelectorAll('.logo-mark').forEach(marca => {
+      const img = new Image();
+      img.src = cfg.logo_url;
+      img.alt = cfg.nome_site;
+      img.style.width  = cfg.logo_largura + 'px';
+      img.style.height = cfg.logo_altura + 'px';
+      img.style.objectFit = 'cover';
+      img.style.borderRadius = cfg.logo_formato === 'quadrado' ? '8px' : '50%';
+      marca.replaceChildren(img);
+    });
+  }
+})();
+
 /* ---- Carrossel do hero ---- */
-(function(){
+(async function(){
   const slider = document.getElementById('slider');
   if(!slider) return;
   const trilho = slider.querySelector('.slides');
-  const total  = trilho.children.length;
   const dots   = document.getElementById('dots');
+
+  /* Se houver banners cadastrados no painel, eles substituem os fixos. */
+  if(typeof DB !== 'undefined' && DB.ativo){
+    const banners = await DB.listarBanners();
+    if(banners.length){
+      trilho.innerHTML = banners.map(b => {
+        const fundo = b.img
+          ? `background-image:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),url('${b.img}')`
+          : `background-image:linear-gradient(135deg,${b.cor_inicio},${b.cor_fim})`;
+        return `<div class="slide" style="${fundo}">
+          <div class="slide-content">
+            ${b.titulo ? `<h2>${b.titulo}</h2>` : ''}
+            ${b.subtitulo ? `<p>${b.subtitulo}</p>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      dots.innerHTML = '';
+    }
+  }
+
+  const total = trilho.children.length;
+  if(!total) return;
   let atual = 0, timer;
 
   for(let i = 0; i < total; i++){

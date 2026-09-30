@@ -14,16 +14,58 @@ const DB = (() => {
     ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     : null;
 
-  /** Busca os produtos publicados. Devolve [] se estiver offline/local. */
+  /** Busca os produtos publicados. Devolve [] se estiver offline/local.
+   *  O nome do catálogo tem prioridade sobre o campo antigo "categoria". */
   async function listarProdutos(){
     if(!cliente) return [];
     const { data, error } = await cliente
       .from('produtos')
-      .select('id, nome, categoria, preco, icone, img, ativo')
+      .select('id, nome, categoria, preco, icone, img, ativo, catalogo_id, catalogos(nome)')
       .eq('ativo', true)
       .order('nome');
     if(error){ console.warn('[Supabase] produtos:', error.message); return []; }
-    return (data || []).map(p => ({ ...p, id: String(p.id), preco: Number(p.preco) }));
+    return (data || []).map(p => ({
+      ...p,
+      id: String(p.id),
+      preco: Number(p.preco),
+      categoria: p.catalogos?.nome || p.categoria || 'Geral'
+    }));
+  }
+
+  /** Catálogos ativos, na ordem definida no painel. */
+  async function listarCatalogos(){
+    if(!cliente) return [];
+    const { data, error } = await cliente
+      .from('catalogos')
+      .select('id, nome, descricao, img, ordem')
+      .eq('ativo', true)
+      .order('ordem').order('nome');
+    if(error){ console.warn('[Supabase] catalogos:', error.message); return []; }
+    return data || [];
+  }
+
+  /** Banners do topo, na ordem definida no painel. */
+  async function listarBanners(){
+    if(!cliente) return [];
+    const { data, error } = await cliente
+      .from('banners')
+      .select('id, titulo, subtitulo, img, cor_inicio, cor_fim, ordem')
+      .eq('ativo', true)
+      .order('ordem').order('id');
+    if(error){ console.warn('[Supabase] banners:', error.message); return []; }
+    return data || [];
+  }
+
+  /** Configurações do site (logo, nome, frase). null se indisponível. */
+  async function obterConfig(){
+    if(!cliente) return null;
+    const { data, error } = await cliente
+      .from('configuracoes')
+      .select('*')
+      .eq('id', 1)
+      .maybeSingle();
+    if(error){ console.warn('[Supabase] configuracoes:', error.message); return null; }
+    return data;
   }
 
   /** Grava um pedido com seus itens. Devolve o id do pedido ou null. */
@@ -62,5 +104,9 @@ const DB = (() => {
     return true;
   }
 
-  return { ativo, cliente, listarProdutos, criarPedido, criarContato };
+  return {
+    ativo, cliente,
+    listarProdutos, listarCatalogos, listarBanners, obterConfig,
+    criarPedido, criarContato
+  };
 })();
