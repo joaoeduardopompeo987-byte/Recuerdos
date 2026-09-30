@@ -429,13 +429,19 @@
         <div class="adm-opcoes">
           <button class="opcao ${cfg.logo_formato === 'redondo' ? 'ativa' : ''}" data-formato="redondo">◔ Redondo</button>
           <button class="opcao ${cfg.logo_formato === 'quadrado' ? 'ativa' : ''}" data-formato="quadrado">▣ Quadrado</button>
+          <button class="opcao ${cfg.logo_formato === 'larga' ? 'ativa' : ''}" data-formato="larga">▭ Larga</button>
         </div>
+        <p class="adm-dica">
+          <strong>Redondo</strong> recorta em círculo — só para símbolos quadrados.
+          <strong>Quadrado</strong> encaixa a imagem inteira numa caixa.
+          <strong>Larga</strong> é a certa para logos horizontais, nomes escritos e assinaturas: a largura se ajusta sozinha e nada é cortado.
+        </p>
 
         <div class="dupla">
-          <label class="bloco">Largura (px) <input type="number" id="cfg-larg" min="16" max="200" value="${cfg.logo_largura}"></label>
+          <label class="bloco">Largura (px) <input type="number" id="cfg-larg" min="16" max="600" value="${cfg.logo_largura}"></label>
           <label class="bloco">Altura (px) <input type="number" id="cfg-alt" min="16" max="200" value="${cfg.logo_altura}"></label>
         </div>
-        <p class="adm-dica">Entre 16 e 200. Largura e altura iguais deixam o redondo um círculo perfeito.</p>
+        <p class="adm-dica">No formato Larga, a largura vira apenas um limite máximo — ajuste a altura (algo entre 44 e 70 costuma ficar bom) e deixe a largura folgada, tipo 260.</p>
 
         <div class="adm-banner-acoes">
           <button class="btn" id="salvar-logo">Salvar logo</button>
@@ -452,9 +458,13 @@
       const alt  = Number(el('cfg-alt').value) || 56;
       const marca = el('previa-marca');
       el('previa-nome').textContent = el('cfg-nome').value || 'Recuerdos';
+      const est = estiloLogo({ logo_formato: formato, logo_largura: larg, logo_altura: alt });
+      const css = Object.entries(est)
+        .map(([p, v]) => p.replace(/[A-Z]/g, c => '-' + c.toLowerCase()) + ':' + v)
+        .join(';');
       marca.innerHTML = url
-        ? `<img src="${esc(url)}" alt="" title="Clique para ampliar" style="cursor:zoom-in;width:${larg}px;height:${alt}px;object-fit:cover;border-radius:${formato === 'quadrado' ? '8px' : '50%'}">`
-        : `<span class="sem-logo" style="width:${larg}px;height:${alt}px;border-radius:${formato === 'quadrado' ? '8px' : '50%'}"></span>`;
+        ? `<img src="${esc(url)}" alt="" title="Clique para ampliar" style="cursor:zoom-in;${css}">`
+        : `<span class="sem-logo" style="width:${larg}px;height:${alt}px;border-radius:${formato === 'redondo' ? '50%' : '8px'}"></span>`;
       const foto = marca.querySelector('img');
       if(foto) foto.addEventListener('click', () => Lightbox.abrir(foto.src, 'Logo'));
     }
@@ -475,7 +485,7 @@
     el('descartar-logo').addEventListener('click', verLogo);
 
     el('salvar-logo').addEventListener('click', async () => {
-      const larg = Math.min(200, Math.max(16, Number(el('cfg-larg').value) || 56));
+      const larg = Math.min(600, Math.max(16, Number(el('cfg-larg').value) || 56));
       const alt  = Math.min(200, Math.max(16, Number(el('cfg-alt').value) || 56));
       const { error } = await sb.from('configuracoes').update({
         nome_site: el('cfg-nome').value.trim() || 'Recuerdos',

@@ -53,6 +53,21 @@ const Lightbox = (() => {
   return { abrir, fechar };
 })();
 
+/* ---- Como a logo se encaixa no topo, conforme o formato escolhido ----
+   redondo  : recorta em círculo (bom para símbolos quadrados)
+   quadrado : cabe inteira dentro da caixa, cantos arredondados
+   larga    : só a altura manda; a largura se ajusta sozinha (bom para
+              logos horizontais, assinaturas e nomes escritos)          */
+function estiloLogo(cfg){
+  const larg = cfg.logo_largura + 'px';
+  const alt  = cfg.logo_altura + 'px';
+  if(cfg.logo_formato === 'larga')
+    return { height: alt, width: 'auto', maxWidth: larg, objectFit: 'contain', borderRadius: '0' };
+  if(cfg.logo_formato === 'quadrado')
+    return { height: alt, width: larg, objectFit: 'contain', borderRadius: '8px' };
+  return { height: alt, width: larg, objectFit: 'cover', borderRadius: '50%' };
+}
+
 /* ---- Identidade do site: logo, nome e frase (vêm do painel) ---- */
 (async function(){
   if(typeof DB === 'undefined' || !DB.ativo) return;
@@ -68,10 +83,7 @@ const Lightbox = (() => {
       const img = new Image();
       img.src = cfg.logo_url;
       img.alt = cfg.nome_site;
-      img.style.width  = cfg.logo_largura + 'px';
-      img.style.height = cfg.logo_altura + 'px';
-      img.style.objectFit = 'cover';
-      img.style.borderRadius = cfg.logo_formato === 'quadrado' ? '8px' : '50%';
+      Object.assign(img.style, estiloLogo(cfg));
       marca.replaceChildren(img);
       marca.classList.add('amplia');
       marca.title = 'Clique para ver a logo ampliada';
