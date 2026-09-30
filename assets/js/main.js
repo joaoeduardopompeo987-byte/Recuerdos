@@ -91,6 +91,7 @@ function estiloLogo(cfg){
       img.alt = cfg.nome_site;
       Object.assign(img.style, estiloLogo(cfg));
       marca.replaceChildren(img);
+      marca.closest('.logo')?.classList.add('tem-imagem');
       marca.classList.add('amplia');
       marca.title = 'Clique para ver a logo ampliada';
     });
