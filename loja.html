@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Loja — Recuerdos</title>
+<meta name="description" content="Loja online de souvenirs personalizados.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a href="tel:+554732370005" class="topbar-item">+55 (47) <strong>3237-0005</strong></a>
+    <a href="mailto:contato@recuerdos.com.br" class="topbar-item">contato@recuerdos.com.br</a>
+    <a href="https://wa.me/5547992157309" target="_blank" rel="noopener" class="topbar-whats">Atendimento rápido <strong>WhatsApp</strong></a>
+  </div>
+</div>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="30" fill="#8fd8f2"/>
+          <path d="M2 40c10-6 18 4 30-2s20 2 30-4v28H2z" fill="#1aa3dd"/>
+          <circle cx="46" cy="18" r="7" fill="#ffd34e"/>
+        </svg>
+      </span>
+      <span class="logo-text">RECUERDOS</span>
+    </a>
+    <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav class="nav">
+      <ul>
+        <li><a href="index.html#quem-somos">Quem somos</a></li>
+        <li><a href="index.html#segmentos">Segmentos</a></li>
+        <li><a href="loja.html">Loja</a></li>
+        <li><a href="index.html#contato">Contato</a></li>
+      </ul>
+    </nav>
+    <button class="cart-btn" id="cart-btn" aria-label="Abrir carrinho">
+      <svg viewBox="0 0 24 24"><path d="M6 6h15l-1.5 9h-12z"/><circle cx="9" cy="20" r="1.6"/><circle cx="18" cy="20" r="1.6"/><path d="M6 6L5 3H2"/></svg>
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </div>
+</header>
+
+<section class="loja-hero">
+  <div class="container">
+    <h1>Loja de souvenirs</h1>
+    <p>Escolha seus produtos e finalize o pedido pelo WhatsApp.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="loja-filtros">
+      <input type="search" id="busca" placeholder="Buscar produto..." aria-label="Buscar produto">
+      <div class="chips" id="chips"></div>
+      <select id="ordem" aria-label="Ordenar">
+        <option value="nome">Ordenar: nome</option>
+        <option value="menor">Menor preço</option>
+        <option value="maior">Maior preço</option>
+      </select>
+    </div>
+    <div class="loja-grid" id="loja-grid"></div>
+    <p class="vazio" id="vazio" hidden>Nenhum produto encontrado.</p>
+  </div>
+</section>
+
+<!-- ============ CARRINHO ============ -->
+<div class="overlay" id="overlay" hidden></div>
+<aside class="carrinho" id="carrinho" aria-label="Carrinho" hidden>
+  <div class="carrinho-topo">
+    <h2>Seu carrinho</h2>
+    <button class="fechar" id="fechar-carrinho" aria-label="Fechar">&times;</button>
+  </div>
+  <div class="carrinho-itens" id="carrinho-itens"></div>
+  <div class="carrinho-rodape">
+    <div class="total"><span>Total</span><strong id="total">R$ 0,00</strong></div>
+    <button class="btn" id="finalizar">Finalizar pelo WhatsApp</button>
+    <button class="btn-limpar" id="limpar">Esvaziar carrinho</button>
+  </div>
+</aside>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <p>&copy; <span id="ano"></span> Recuerdos — Todos os direitos reservados.</p>
+    <p>Souvenirs incríveis, para momentos inesquecíveis.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/db.js"></script>
+<script src="assets/js/produtos.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/loja.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+Coloque as imagens do site aqui.
+
+Nomes que o site já procura (se não existirem, aparece um placeholder "IMG"):
+  seg-parques.png
+  seg-atracoes.png
+  seg-cidades.png
+  seg-corporativo.png
+
+Para os banners do topo, edite as classes .slide-1 / .slide-2 / .slide-3
+em assets/css/style.css e troque o gradiente por:
+  background-image:url('../img/banner1.jpg');
+
+Para fotos de produto, edite assets/js/produtos.js e adicione o campo "img":
+  { nome:'Canecas', categoria:'Cozinha', preco:39.90, img:'assets/img/caneca.jpg' }
