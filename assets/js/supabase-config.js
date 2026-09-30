@@ -9,8 +9,8 @@
    A chave "anon" pode ficar pública — ela é protegida pelas
    políticas de RLS do banco. NUNCA use aqui a "service_role".
    ========================================================= */
-const SUPABASE_URL      = ''; // ex.: https://abcdefgh.supabase.co
-const SUPABASE_ANON_KEY = ''; // ex.: eyJhbGciOiJIUzI1NiIsInR5cCI6...
+const SUPABASE_URL      = 'https://vdwunlkmgozcvaambnvp.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_bN4fg6BJn9hq904y_3IYlw_1LphvI9m';
 
 /* Enquanto estiver vazio, o site funciona com o catálogo local
    de assets/js/produtos.js (modo demonstração). */
