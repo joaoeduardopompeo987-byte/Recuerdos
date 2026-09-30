@@ -453,8 +453,10 @@
       const marca = el('previa-marca');
       el('previa-nome').textContent = el('cfg-nome').value || 'Recuerdos';
       marca.innerHTML = url
-        ? `<img src="${esc(url)}" alt="" style="width:${larg}px;height:${alt}px;object-fit:cover;border-radius:${formato === 'quadrado' ? '8px' : '50%'}">`
+        ? `<img src="${esc(url)}" alt="" title="Clique para ampliar" style="cursor:zoom-in;width:${larg}px;height:${alt}px;object-fit:cover;border-radius:${formato === 'quadrado' ? '8px' : '50%'}">`
         : `<span class="sem-logo" style="width:${larg}px;height:${alt}px;border-radius:${formato === 'quadrado' ? '8px' : '50%'}"></span>`;
+      const foto = marca.querySelector('img');
+      if(foto) foto.addEventListener('click', () => Lightbox.abrir(foto.src, 'Logo'));
     }
 
     ['cfg-nome','cfg-larg','cfg-alt'].forEach(id => el(id).addEventListener('input', atualizarPrevia));

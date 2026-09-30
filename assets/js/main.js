@@ -16,6 +16,43 @@
   });
 })();
 
+/* ---- Visualizador de imagem em tela cheia ---- */
+const Lightbox = (() => {
+  let caixa;
+
+  function montar(){
+    caixa = document.createElement('div');
+    caixa.className = 'lightbox';
+    caixa.hidden = true;
+    caixa.innerHTML = `
+      <button class="lightbox-fechar" aria-label="Fechar">&times;</button>
+      <img alt="">`;
+    document.body.appendChild(caixa);
+
+    caixa.addEventListener('click', e => {
+      if(e.target === caixa || e.target.closest('.lightbox-fechar')) fechar();
+    });
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Escape' && !caixa.hidden) fechar();
+    });
+  }
+
+  function abrir(src, alt){
+    if(!caixa) montar();
+    const img = caixa.querySelector('img');
+    img.src = src;
+    img.alt = alt || '';
+    caixa.hidden = false;
+    document.body.style.overflow = 'hidden';
+  }
+  function fechar(){
+    caixa.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  return { abrir, fechar };
+})();
+
 /* ---- Identidade do site: logo, nome e frase (vêm do painel) ---- */
 (async function(){
   if(typeof DB === 'undefined' || !DB.ativo) return;
@@ -36,8 +73,21 @@
       img.style.objectFit = 'cover';
       img.style.borderRadius = cfg.logo_formato === 'quadrado' ? '8px' : '50%';
       marca.replaceChildren(img);
+      marca.classList.add('amplia');
+      marca.title = 'Clique para ver a logo ampliada';
     });
   }
+
+  /* clicar na logo abre a imagem grande, em vez de navegar */
+  document.querySelectorAll('.logo-mark.amplia').forEach(marca => {
+    marca.addEventListener('click', e => {
+      const img = marca.querySelector('img');
+      if(!img) return;
+      e.preventDefault();
+      e.stopPropagation();
+      Lightbox.abrir(img.src, img.alt);
+    });
+  });
 })();
 
 /* ---- Carrossel do hero ---- */
