@@ -162,6 +162,23 @@ function estiloLogo(cfg){
   ir(0);
 })();
 
+/* ---- Cards de "Segmentos de atuação" (vêm do painel) ---- */
+(async function(){
+  const grade = document.querySelector('.seg-grid');
+  if(!grade || typeof DB === 'undefined' || !DB.ativo) return;
+  const segmentos = await DB.listarSegmentos();
+  if(!segmentos.length) return;              // sem cadastro, ficam os fixos do HTML
+
+  grade.innerHTML = segmentos.map(s => `
+    <article class="seg-card">
+      <div class="seg-thumb">${s.img
+        ? `<img src="${s.img}" alt="${s.titulo}">`
+        : '<span class="ph">IMG</span>'}</div>
+      <h3>${s.titulo}</h3>
+      <p>${s.descricao || ''}</p>
+    </article>`).join('');
+})();
+
 /* ---- Grade de produtos da home ---- */
 (function(){
   const grid = document.getElementById('prod-grid');

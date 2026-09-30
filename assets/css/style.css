@@ -369,6 +369,11 @@ a{color:inherit;text-decoration:none}
 }
 .miniatura img{width:100%;height:100%;object-fit:cover}
 .miniatura span{font-size:10px;color:#9fc4d8;text-align:center;line-height:1.2}
+.miniatura.redonda{border-radius:50%;border:3px solid var(--amarelo)}
+.adm-tabela textarea{
+  font:inherit;font-size:14px;width:100%;min-width:220px;padding:6px 8px;
+  border:1px solid var(--borda);border-radius:6px;background:#fff;color:var(--texto);resize:vertical
+}
 .adm-tabela select{font:inherit;font-size:14px;padding:6px 8px;border:1px solid var(--borda);border-radius:6px;background:#fff;color:var(--texto)}
 .adm-tabela input.curto{max-width:90px}
 

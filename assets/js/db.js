@@ -44,6 +44,18 @@ const DB = (() => {
     return data || [];
   }
 
+  /** Cards de "Segmentos de atuação", na ordem definida no painel. */
+  async function listarSegmentos(){
+    if(!cliente) return [];
+    const { data, error } = await cliente
+      .from('segmentos')
+      .select('id, titulo, descricao, img, ordem')
+      .eq('ativo', true)
+      .order('ordem').order('id');
+    if(error){ console.warn('[Supabase] segmentos:', error.message); return []; }
+    return data || [];
+  }
+
   /** Banners do topo, na ordem definida no painel. */
   async function listarBanners(){
     if(!cliente) return [];
@@ -106,7 +118,7 @@ const DB = (() => {
 
   return {
     ativo, cliente,
-    listarProdutos, listarCatalogos, listarBanners, obterConfig,
+    listarProdutos, listarCatalogos, listarSegmentos, listarBanners, obterConfig,
     criarPedido, criarContato
   };
 })();

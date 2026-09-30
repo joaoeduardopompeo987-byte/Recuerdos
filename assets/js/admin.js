@@ -109,6 +109,7 @@
   const ABAS = [
     ['produtos',  '📦 Produtos'],
     ['catalogos', '🏷️ Catálogos'],
+    ['segmentos', '🎯 Segmentos'],
     ['banners',   '🖼️ Banners'],
     ['logo',      '🎨 Logo'],
     ['pedidos',   '🧾 Pedidos'],
@@ -137,8 +138,8 @@
       await sb.auth.signOut(); sessao = null; desenhar();
     });
 
-    ({ produtos: verProdutos, catalogos: verCatalogos, banners: verBanners,
-       logo: verLogo, pedidos: verPedidos, contatos: verContatos })[aba]();
+    ({ produtos: verProdutos, catalogos: verCatalogos, segmentos: verSegmentos,
+       banners: verBanners, logo: verLogo, pedidos: verPedidos, contatos: verContatos })[aba]();
   }
 
   /* =======================================================
@@ -306,6 +307,79 @@
         if(!confirm('Apagar este catálogo? Os produtos dele ficam sem catálogo, mas não são apagados.')) return;
         const { error } = await sb.from('catalogos').delete().eq('id', tr.dataset.id);
         error ? recado('Erro: ' + error.message, 'erro') : verCatalogos();
+      });
+    });
+  }
+
+  /* =======================================================
+     SEGMENTOS DE ATUAÇÃO (os cards redondos da home)
+     ======================================================= */
+  async function verSegmentos(){
+    const { data, error } = await sb.from('segmentos').select('*').order('ordem').order('id');
+    if(error) return alvo().innerHTML = aviso(
+      'Não consegui ler os segmentos: ' + esc(error.message) +
+      '<br><br>Se a mensagem fala em tabela inexistente, rode o arquivo <strong>supabase/segmentos.sql</strong> no SQL Editor.');
+
+    alvo().innerHTML = `
+      <div class="adm-barra">
+        <h2>Segmentos de atuação (${data.length})</h2>
+        <button class="btn" id="novo-seg">+ Novo segmento</button>
+      </div>
+      <div class="adm-tabela-rol">
+      <table class="adm-tabela">
+        <thead><tr><th>Imagem</th><th>Título</th><th>Descrição</th><th>Ordem</th><th>Ativo</th><th></th></tr></thead>
+        <tbody>${data.map(s => `
+          <tr data-id="${s.id}">
+            <td>
+              <div class="miniatura redonda">${s.img ? `<img src="${esc(s.img)}" alt="">` : '<span>sem foto</span>'}</div>
+              <input type="hidden" data-c="img" value="${esc(s.img)}">
+              <button class="mini trocar-foto">Trocar</button>
+              <button class="mini tirar-foto">Tirar</button>
+            </td>
+            <td><input value="${esc(s.titulo)}" data-c="titulo"></td>
+            <td><textarea data-c="descricao" rows="3">${esc(s.descricao)}</textarea></td>
+            <td><input value="${s.ordem}" data-c="ordem" type="number" class="curto"></td>
+            <td class="meio"><input type="checkbox" data-c="ativo" ${s.ativo ? 'checked' : ''}></td>
+            <td class="acoes"><button class="mini salvar">Salvar</button><button class="mini apagar">Apagar</button></td>
+          </tr>`).join('')}</tbody>
+      </table></div>
+      <p class="adm-dica">São os cards redondos com borda amarela na página inicial. A imagem aparece dentro do círculo — use uma foto quadrada, com o produto centralizado, para não cortar nada importante.</p>`;
+
+    document.getElementById('novo-seg').addEventListener('click', async () => {
+      const { error } = await sb.from('segmentos').insert({ titulo: 'Novo segmento', descricao: '', ordem: 99, ativo: false });
+      error ? recado('Erro: ' + error.message, 'erro') : verSegmentos();
+    });
+
+    alvo().querySelectorAll('tbody tr').forEach(tr => {
+      const v = c => tr.querySelector(`[data-c="${c}"]`);
+      tr.querySelector('.trocar-foto').addEventListener('click', async () => {
+        const url = await escolherImagem('segmentos');
+        if(!url) return;
+        v('img').value = url;
+        tr.querySelector('.miniatura').innerHTML = `<img src="${url}" alt="">`;
+      });
+      tr.querySelector('.tirar-foto').addEventListener('click', () => {
+        v('img').value = '';
+        tr.querySelector('.miniatura').innerHTML = '<span>sem foto</span>';
+      });
+      tr.querySelector('.salvar').addEventListener('click', async () => {
+        const btn = tr.querySelector('.salvar');
+        btn.textContent = '...';
+        const { error } = await sb.from('segmentos').update({
+          titulo: v('titulo').value.trim(),
+          descricao: v('descricao').value.trim() || null,
+          img: v('img').value.trim() || null,
+          ordem: Number(v('ordem').value) || 0,
+          ativo: v('ativo').checked
+        }).eq('id', tr.dataset.id);
+        btn.textContent = error ? 'Erro' : 'Salvo ✓';
+        if(error) recado('Erro: ' + error.message, 'erro');
+        setTimeout(() => btn.textContent = 'Salvar', 1800);
+      });
+      tr.querySelector('.apagar').addEventListener('click', async () => {
+        if(!confirm('Apagar este segmento?')) return;
+        const { error } = await sb.from('segmentos').delete().eq('id', tr.dataset.id);
+        error ? recado('Erro: ' + error.message, 'erro') : verSegmentos();
       });
     });
   }
