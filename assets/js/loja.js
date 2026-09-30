@@ -1,7 +1,7 @@
-/* =========================================================
+﻿/* =========================================================
    Loja — catálogo, filtros e carrinho (salvo no navegador)
    ========================================================= */
-const WHATSAPP = '5547992157309'; // número que recebe os pedidos
+const WHATSAPP = '5545991321583'; // número que recebe os pedidos
 
 const grid   = document.getElementById('loja-grid');
 const vazio  = document.getElementById('vazio');

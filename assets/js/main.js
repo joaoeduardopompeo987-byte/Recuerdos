@@ -1,4 +1,4 @@
-/* =========================================================
+﻿/* =========================================================
    Recuerdos — comportamentos da página
    ========================================================= */
 
@@ -207,7 +207,7 @@ function estiloLogo(cfg){
     }
 
     const corpo = `Nome: ${dados.nome}\nE-mail: ${dados.email}\nTelefone: ${dados.telefone}\n\n${dados.mensagem}`;
-    window.location.href = `mailto:contato@recuerdos.com.br?subject=${encodeURIComponent('Contato pelo site')}&body=${encodeURIComponent(corpo)}`;
+    window.location.href = `mailto:joaoeduardopompeoneves987@hmail.com?subject=${encodeURIComponent('Contato pelo site')}&body=${encodeURIComponent(corpo)}`;
     msg.textContent = 'Abrindo seu programa de e-mail...';
     form.reset();
   });
