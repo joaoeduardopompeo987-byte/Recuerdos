@@ -433,16 +433,18 @@ a{color:inherit;text-decoration:none}
 @media (max-width:1024px){
   .nav-toggle{display:flex;order:6}
 
-  /* gaveta lateral: fica fora do cabeçalho, por cima da página */
+  /* painel que desce por baixo do cabeçalho, ocupando a largura toda */
   .nav{
-    position:fixed;top:0;right:0;height:100%;width:290px;max-width:82vw;
-    background:#fff;z-index:90;margin:0;padding:72px 20px 24px;
-    transform:translateX(100%);transition:transform .28s ease;
-    box-shadow:-8px 0 28px rgba(10,61,107,.2);overflow-y:auto
+    position:absolute;top:100%;left:0;right:0;margin:0;
+    background:#fff;border-top:1px solid var(--borda);
+    box-shadow:0 16px 30px rgba(10,61,107,.18);
+    max-height:0;overflow:hidden;padding:0 20px;
+    transition:max-height .3s ease,padding .3s ease
   }
-  .nav.open{transform:translateX(0)}
+  .nav.open{max-height:calc(100vh - 100%);overflow-y:auto;padding:4px 20px 12px}
   .nav ul{flex-direction:column;align-items:stretch;gap:0}
   .nav li{border-bottom:1px solid var(--borda)}
+  .nav li:last-child{border-bottom:0}
   .nav a{display:block;padding:15px 4px;font-size:16px}
   .nav a::after{display:none}
 
@@ -451,8 +453,8 @@ a{color:inherit;text-decoration:none}
      senão o fundo cobriria a própria gaveta. */
   body.menu-aberto .header{z-index:100}
 
-  /* fundo escurecido atrás da gaveta */
-  .nav-fundo{position:fixed;inset:0;z-index:85;background:rgba(10,61,107,.45);
+  /* fundo escurecido atrás do painel */
+  .nav-fundo{position:fixed;inset:0;z-index:85;background:rgba(10,61,107,.35);
              opacity:0;transition:opacity .28s ease}
   .nav-fundo.aberto{opacity:1}
   .nav-fundo[hidden]{display:none}
