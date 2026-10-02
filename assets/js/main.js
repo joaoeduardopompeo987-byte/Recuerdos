@@ -19,6 +19,7 @@
     btn.setAttribute('aria-expanded', 'true');
     fundo.hidden = false;
     requestAnimationFrame(() => fundo.classList.add('aberto'));
+    document.body.classList.add('menu-aberto');
     document.body.style.overflow = 'hidden';
   }
   function fechar(){
@@ -26,7 +27,10 @@
     btn.classList.remove('ativo');
     btn.setAttribute('aria-expanded', 'false');
     fundo.classList.remove('aberto');
-    setTimeout(() => { fundo.hidden = true; }, 280);   // espera a animação
+    setTimeout(() => {
+      fundo.hidden = true;
+      document.body.classList.remove('menu-aberto');   // só depois da animação
+    }, 280);
     document.body.style.overflow = '';
   }
 

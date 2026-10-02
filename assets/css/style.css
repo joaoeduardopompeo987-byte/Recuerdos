@@ -446,6 +446,11 @@ a{color:inherit;text-decoration:none}
   .nav a{display:block;padding:15px 4px;font-size:16px}
   .nav a::after{display:none}
 
+  /* A gaveta vive dentro do .header, então herda o empilhamento dele.
+     Com o menu aberto, o cabeçalho sobe acima do fundo escuro —
+     senão o fundo cobriria a própria gaveta. */
+  body.menu-aberto .header{z-index:100}
+
   /* fundo escurecido atrás da gaveta */
   .nav-fundo{position:fixed;inset:0;z-index:85;background:rgba(10,61,107,.45);
              opacity:0;transition:opacity .28s ease}

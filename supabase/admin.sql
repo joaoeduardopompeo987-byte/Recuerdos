@@ -22,7 +22,7 @@ alter table public.admins add column if not exists user_id uuid;
 
 -- 1.1 cadastre aqui os e-mails que terão acesso ao painel
 insert into public.admins (email) values
-  ('novosnegocios@mmcreceptivo.com.br')   -- <<< troque/adicione aqui
+  ('joaoeduardopompeo987@gmail.com')   -- <<< troque/adicione aqui
 on conflict (email) do nothing;
 
 -- 1.2 função que responde "quem está logado é admin?"
