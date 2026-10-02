@@ -431,14 +431,35 @@ a{color:inherit;text-decoration:none}
   .loja-grid{grid-template-columns:repeat(3,1fr)}
 }
 @media (max-width:1024px){
-  .nav-toggle{display:flex}
-  .nav{order:5;flex-basis:100%;display:none;margin-left:0}
-  .nav.open{display:block}
+  .nav-toggle{display:flex;order:6}
+
+  /* gaveta lateral: fica fora do cabeçalho, por cima da página */
+  .nav{
+    position:fixed;top:0;right:0;height:100%;width:290px;max-width:82vw;
+    background:#fff;z-index:90;margin:0;padding:72px 20px 24px;
+    transform:translateX(100%);transition:transform .28s ease;
+    box-shadow:-8px 0 28px rgba(10,61,107,.2);overflow-y:auto
+  }
+  .nav.open{transform:translateX(0)}
   .nav ul{flex-direction:column;align-items:stretch;gap:0}
-  .nav li{border-top:1px solid var(--borda)}
-  .nav a{display:block;padding:13px 2px}
+  .nav li{border-bottom:1px solid var(--borda)}
+  .nav a{display:block;padding:15px 4px;font-size:16px}
   .nav a::after{display:none}
-  .social{order:4}
+
+  /* fundo escurecido atrás da gaveta */
+  .nav-fundo{position:fixed;inset:0;z-index:85;background:rgba(10,61,107,.45);
+             opacity:0;transition:opacity .28s ease}
+  .nav-fundo.aberto{opacity:1}
+  .nav-fundo[hidden]{display:none}
+
+  /* o botão do menu vira um X e sobe acima da gaveta */
+  .nav-toggle{position:relative;z-index:95}
+  .nav-toggle span{transition:transform .25s ease,opacity .2s ease}
+  .nav-toggle.ativo span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+  .nav-toggle.ativo span:nth-child(2){opacity:0}
+  .nav-toggle.ativo span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+  .social{order:4;margin-left:auto}
   .hero-tagline{top:16px;padding:6px 22px;white-space:normal;text-align:center;border-radius:18px}
   .slide{height:320px}
   .contato-grid{grid-template-columns:1fr}

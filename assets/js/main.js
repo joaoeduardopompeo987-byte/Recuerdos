@@ -2,17 +2,43 @@
    Recuerdos — comportamentos da página
    ========================================================= */
 
-/* ---- Menu mobile ---- */
+/* ---- Menu mobile: gaveta lateral sobre a página ---- */
 (function(){
   const btn = document.querySelector('.nav-toggle');
   const nav = document.querySelector('.nav');
   if(!btn || !nav) return;
-  btn.addEventListener('click', () => {
-    const aberto = nav.classList.toggle('open');
-    btn.setAttribute('aria-expanded', aberto);
+
+  const fundo = document.createElement('div');
+  fundo.className = 'nav-fundo';
+  fundo.hidden = true;
+  document.body.appendChild(fundo);
+
+  function abrir(){
+    nav.classList.add('open');
+    btn.classList.add('ativo');
+    btn.setAttribute('aria-expanded', 'true');
+    fundo.hidden = false;
+    requestAnimationFrame(() => fundo.classList.add('aberto'));
+    document.body.style.overflow = 'hidden';
+  }
+  function fechar(){
+    nav.classList.remove('open');
+    btn.classList.remove('ativo');
+    btn.setAttribute('aria-expanded', 'false');
+    fundo.classList.remove('aberto');
+    setTimeout(() => { fundo.hidden = true; }, 280);   // espera a animação
+    document.body.style.overflow = '';
+  }
+
+  btn.addEventListener('click', () => nav.classList.contains('open') ? fechar() : abrir());
+  fundo.addEventListener('click', fechar);
+  nav.addEventListener('click', e => { if(e.target.tagName === 'A') fechar(); });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && nav.classList.contains('open')) fechar();
   });
-  nav.addEventListener('click', e => {
-    if(e.target.tagName === 'A') nav.classList.remove('open');
+  /* ao voltar para tela grande, desfaz o estado da gaveta */
+  window.addEventListener('resize', () => {
+    if(window.innerWidth > 1024 && nav.classList.contains('open')) fechar();
   });
 })();
 
