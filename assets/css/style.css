@@ -407,6 +407,14 @@ a{color:inherit;text-decoration:none}
 .adm-form-logo .rotulo{margin:6px 0 0;font-weight:600;font-size:14px}
 .adm-form-logo .bloco{display:grid;gap:5px;font-size:13px;font-weight:600}
 .adm-form-logo .bloco input{font:inherit;font-weight:400;font-size:14px;padding:9px 11px;border:1px solid var(--borda);border-radius:6px;background:#fff;color:var(--texto)}
+.adm-sub-titulo{margin:0;font-size:18px;color:var(--azul)}
+.adm-previa-loja{
+  border-radius:8px;padding:26px 22px;color:#fff;display:grid;gap:4px;
+  background-size:cover;background-position:center;min-height:110px;align-content:center;
+  text-shadow:0 2px 8px rgba(0,0,0,.3)
+}
+.adm-previa-loja strong{font-size:24px}
+.adm-previa-loja span{font-size:14px}
 .adm-opcoes{display:flex;gap:10px;flex-wrap:wrap}
 .opcao{font:inherit;font-size:15px;cursor:pointer;background:#fff;border:1px solid var(--borda);padding:12px 22px;border-radius:8px;color:var(--texto)}
 .opcao.ativa{border-color:var(--ciano);background:var(--fundo-alt);color:var(--azul);font-weight:600}

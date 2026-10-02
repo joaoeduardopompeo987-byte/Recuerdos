@@ -127,6 +127,20 @@ function estiloLogo(cfg){
     });
   }
 
+  /* topo da página da loja */
+  const hero = document.getElementById('loja-hero');
+  if(hero){
+    const t = document.getElementById('loja-titulo');
+    const s = document.getElementById('loja-subtitulo');
+    if(t && cfg.loja_titulo) t.textContent = cfg.loja_titulo;
+    if(s) s.textContent = cfg.loja_subtitulo || '';
+    hero.style.backgroundImage = cfg.loja_img
+      ? `linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,.28)),url('${cfg.loja_img}')`
+      : `linear-gradient(120deg,${cfg.loja_cor_inicio || '#0a3d6b'},${cfg.loja_cor_fim || '#00c2f3'})`;
+    hero.style.backgroundSize = 'cover';
+    hero.style.backgroundPosition = 'center';
+  }
+
   /* clicar na logo abre a imagem grande, em vez de navegar */
   document.querySelectorAll('.logo-mark.amplia').forEach(marca => {
     marca.addEventListener('click', e => {

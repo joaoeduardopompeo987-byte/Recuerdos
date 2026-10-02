@@ -111,7 +111,7 @@
     ['catalogos', '🏷️ Catálogos'],
     ['segmentos', '🎯 Segmentos'],
     ['banners',   '🖼️ Banners'],
-    ['logo',      '🎨 Logo'],
+    ['logo',      '🎨 Identidade'],
     ['pedidos',   '🧾 Pedidos'],
     ['contatos',  '✉️ Mensagens']
   ];
@@ -521,6 +521,29 @@
           <button class="btn" id="salvar-logo">Salvar logo</button>
           <button class="mini" id="descartar-logo">Descartar alterações</button>
         </div>
+      </div>
+
+      <div class="adm-form-logo" style="margin-top:22px">
+        <h3 class="adm-sub-titulo">Topo da página da loja</h3>
+        <div class="adm-previa-loja" id="previa-loja">
+          <strong id="previa-loja-titulo">${esc(cfg.loja_titulo)}</strong>
+          <span id="previa-loja-sub">${esc(cfg.loja_subtitulo)}</span>
+        </div>
+
+        <label class="bloco">Título <input id="loja-tit" value="${esc(cfg.loja_titulo)}"></label>
+        <label class="bloco">Subtítulo <input id="loja-sub" value="${esc(cfg.loja_subtitulo)}"></label>
+
+        <input type="hidden" id="loja-img" value="${esc(cfg.loja_img)}">
+        <div class="dupla">
+          <label class="bloco">Cor inicial <input type="color" id="loja-c1" value="${esc(cfg.loja_cor_inicio) || '#0a3d6b'}"></label>
+          <label class="bloco">Cor final <input type="color" id="loja-c2" value="${esc(cfg.loja_cor_fim) || '#00c2f3'}"></label>
+        </div>
+        <div class="adm-banner-acoes">
+          <button class="mini" id="loja-escolher">📷 ${cfg.loja_img ? 'Trocar imagem' : 'Usar uma imagem de fundo'}</button>
+          <button class="mini" id="loja-tirar">Usar só as cores</button>
+          <button class="btn" id="loja-salvar">Salvar topo da loja</button>
+        </div>
+        <p class="adm-dica">Com imagem, ela substitui o degradê e ganha um véu escuro para o texto continuar legível. Algo perto de 1920×400 funciona bem.</p>
       </div>`;
 
     let formato = cfg.logo_formato;
@@ -573,7 +596,45 @@
       recado(error ? 'Erro: ' + error.message : 'Logo salva. Recarregue o site para ver.', error ? 'erro' : 'ok');
     });
 
+    /* ---- topo da loja ---- */
+    function previaLoja(){
+      const img = el('loja-img').value;
+      el('previa-loja').style.backgroundImage = img
+        ? `linear-gradient(rgba(0,0,0,.28),rgba(0,0,0,.28)),url('${img}')`
+        : `linear-gradient(120deg,${el('loja-c1').value},${el('loja-c2').value})`;
+      el('previa-loja-titulo').textContent = el('loja-tit').value || 'Loja de souvenirs';
+      el('previa-loja-sub').textContent = el('loja-sub').value;
+    }
+    ['loja-tit','loja-sub','loja-c1','loja-c2'].forEach(id => el(id).addEventListener('input', previaLoja));
+
+    el('loja-escolher').addEventListener('click', async () => {
+      const url = await escolherImagem('loja');
+      if(!url) return;
+      el('loja-img').value = url;
+      previaLoja();
+    });
+    el('loja-tirar').addEventListener('click', () => { el('loja-img').value = ''; previaLoja(); });
+
+    el('loja-salvar').addEventListener('click', async () => {
+      const { error } = await sb.from('configuracoes').update({
+        loja_titulo: el('loja-tit').value.trim() || 'Loja de souvenirs',
+        loja_subtitulo: el('loja-sub').value.trim(),
+        loja_img: el('loja-img').value.trim() || null,
+        loja_cor_inicio: el('loja-c1').value,
+        loja_cor_fim: el('loja-c2').value,
+        atualizado_em: new Date().toISOString()
+      }).eq('id', 1);
+      recado(
+        error
+          ? (/column|coluna/i.test(error.message)
+              ? 'Faltam as colunas no banco: rode supabase/loja-topo.sql no SQL Editor.'
+              : 'Erro: ' + error.message)
+          : 'Topo da loja salvo. Abra a loja para ver.',
+        error ? 'erro' : 'ok');
+    });
+
     atualizarPrevia();
+    previaLoja();
   }
 
   /* =======================================================
